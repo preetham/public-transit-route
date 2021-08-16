@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import RouteList from "../../components/RouteList/RouteList";
 import axiosAPI from "../../shared/Axios";
-
+import { Button, KIND } from "baseui/button";
+import {
+  Display4,
+} from 'baseui/typography';
 import "./Home.css";
+import { FlexGrid, FlexGridItem } from "baseui/flex-grid";
 
 const Home = () => {
   const [routeList, setRouteList] = useState([]);
@@ -34,13 +38,17 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="Home">
-      <div className="Home__title">Public Transit Route</div>
-      <Link to="/create-route" className="Button Button_primary">
-        Create new route
-      </Link>
+    <FlexGrid className="Home">
+      <FlexGridItem>
+        <Display4 >Public Transit Route</Display4>
+      </FlexGridItem>
+      <FlexGridItem>
+        <Link to="/create-route">
+          <Button kind={KIND.minimal}>Create New Route</Button>
+        </Link>
+      </FlexGridItem>
       <RouteList routeList={routeList} deleteRouteFunction={onDelete} />
-    </div>
+    </FlexGrid>
   );
 };
 

@@ -1,42 +1,60 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./RouteList.css";
+import { Button, KIND } from "baseui/button";
+import { FlexGrid, FlexGridItem } from "baseui/flex-grid";
+import {
+  Card,
+  StyledBody,
+  StyledAction
+} from "baseui/card";
+
+const itemProps = {
+  //backgroundColor: 'mono300',
+  //height: 'scale1000',
+  display: 'flex',
+  //alignItems: 'center',
+  //justifyContent: 'center',
+};
 
 const RouteList = ({ routeList, deleteRouteFunction }) => {
   return (
-    <ul className="RouteList">
+    <FlexGrid
+      flexGridColumnGap="scale800"
+      flexGridRowGap="scale800"
+    >
       {routeList.map((route) => {
         const { routeId, routeName, status } = route;
         return (
-          <li key={routeId} className="RouteList__item">
-            <span className="RouteList__name">{routeName}</span>
-            <span className="RouteList__status">{status}</span>
-            <div className="RouteList__buttons">
-              <Link
+          <FlexGridItem {...itemProps}>
+          <Card key={routeId} title={routeName}>
+            <StyledBody>{status}</StyledBody>
+            <StyledAction>
+              <Link style={{marginRight: '0.5rem'}}
                 to={"/route-view/" + routeId}
-                className="Button Button_primary"
               >
-                View
+                <Button kind={KIND.primary}>View</Button>
               </Link>
               <Link
+                style={{marginRight: '0.5rem'}}
                 to={"/route-edit/" + routeId}
-                className="Button Button_secondary"
               >
-                Edit
+                <Button kind={KIND.secondary}>Edit</Button>
               </Link>
-              <button
+              <Button
                 onClick={() => {
                   deleteRouteFunction(routeId);
                 }}
-                className="Button Button_danger"
+                kind={KIND.minimal}
               >
-                Delete
-              </button>
-            </div>
-          </li>
+               Delete
+              </Button>
+            </StyledAction>
+          </Card>
+          </FlexGridItem>
         );
       })}
-    </ul>
+      </FlexGrid>
   );
 };
 

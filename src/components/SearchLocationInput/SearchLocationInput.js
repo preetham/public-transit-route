@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Input } from "baseui/input";
 import "./SearchLocationInput.css";
 
 let autoComplete;

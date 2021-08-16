@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import axiosAPI from "../../shared/Axios";
 import { useParams, Link } from "react-router-dom";
 import Map from "../../components/Map/Map";
-import "./RouteView.css";
+//import "./RouteView.css";
+import { Button, KIND } from "baseui/button";
+import { H5, Label1 } from "baseui/typography";
+import { ListItem, ListItemLabel } from "baseui/list";
+import {Grid, Cell} from 'baseui/layout-grid';
 
 const RouteView = () => {
   const { id } = useParams();
@@ -23,33 +27,47 @@ const RouteView = () => {
 
   return (
     route && (
-      <div className="RouteView">
-        <div className="RouteView__details">
-          <Link to="/" className="Button Button_secondary">
-            Back
-          </Link>
-          <p className="RouteView__name">{route.routeName}</p>
-          <span className="RouteView__direction">
-            Direction : {route.direction.toUpperCase()}
-          </span>
-          <span className="RouteView__status">
-            Status : {route.status.toUpperCase()}
-          </span>
-          <p className="RouteView__heading">Route path</p>
+      <>
+      <Grid>
+          <Cell span={[1]}>
+            <Link to="/">
+              <Button kind={KIND.secondary}>Back</Button>
+            </Link>
+          </Cell>
+          <Cell span={[4]}>
+            <H5>{route.routeName}</H5>
+          </Cell>
+          <Cell span={[2]}>
+            <Label1>
+              Direction : {route.direction.toUpperCase()}
+            </Label1>
+          </Cell>
+          <Cell span={[2]}>
+            <Label1>
+              Status : {route.status.toUpperCase()}
+            </Label1>
+          </Cell>
+        </Grid>
+        <Grid>
+          <Cell span={[4]}>
+          <Label1 className="RouteView__heading">Route path</Label1>
           <ul className="RouteView__ul">
             {route.stops.map((item, index) => (
-              <li key={index} className="RouteView__li">
-                {item.stopName}
-              </li>
+              <ListItem key={index} className="RouteView__li">
+                <ListItemLabel>{item.stopName}</ListItemLabel>
+              </ListItem>
             ))}
           </ul>
-        </div>
+          </Cell>
+        <Cell span={[8]}>
         <Map
           className="RouteView__map"
           direction={route.direction}
           stops={route.stops}
         />
-      </div>
+        </Cell>
+      </Grid>
+      </>
     )
   );
 };

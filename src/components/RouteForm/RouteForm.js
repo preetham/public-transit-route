@@ -4,8 +4,10 @@ import * as Yup from "yup";
 import axiosAPI from "../../shared/Axios";
 import { useParams, withRouter, Link } from "react-router-dom";
 import Stops from "../Stops/Stops";
-
-import "./RouteForm.css";
+import { Button, KIND } from "baseui/button";
+//import "./RouteForm.css";
+import { Label1 } from "baseui/typography";
+import { Input } from "baseui/input";
 
 const RouteForm = ({ history, editMode }) => {
   const { id } = useParams();
@@ -45,7 +47,7 @@ const RouteForm = ({ history, editMode }) => {
           .required("required"),
         direction: Yup.string().required("required"),
         status: Yup.string().required("required"),
-        stops: Yup.array().min(2, "Add atlest 2 stops").required("required"),
+        stops: Yup.array().min(2, "Add atleast 2 stops").required("required"),
       })}
       onSubmit={async (values, { setSubmitting }) => {
         try {
@@ -64,8 +66,8 @@ const RouteForm = ({ history, editMode }) => {
       {({ values, errors }) => (
         <Form className="RouteForm">
           <div className="RouteForm__input">
-            <label htmlFor="routeName">Route Name</label>
-            <Field name="routeName" type="text" />
+            <Label1 htmlFor="routeName">Route Name</Label1>
+            <Input autoComplete={false} name="routeName" type="text" />
             <ErrorMessage
               name="routeName"
               component="span"
@@ -74,16 +76,16 @@ const RouteForm = ({ history, editMode }) => {
           </div>
 
           <div className="RouteForm__radio">
-            <div id="direction">Direction</div>
+            <Label1 id="direction">Direction</Label1>
             <div role="group" aria-labelledby="direction">
-              <label>
+              <Label1>
                 <Field type="radio" name="direction" value="up" />
                 Up
-              </label>
-              <label>
+              </Label1>
+              <Label1>
                 <Field type="radio" name="direction" value="down" />
                 Down
-              </label>
+              </Label1>
               <ErrorMessage
                 name="direction"
                 component="span"
@@ -93,16 +95,16 @@ const RouteForm = ({ history, editMode }) => {
           </div>
 
           <div className="RouteForm__radio">
-            <div id="status">Status</div>
+            <Label1 id="status">Status</Label1>
             <div role="group" aria-labelledby="status">
-              <label>
+              <Label1>
                 <Field type="radio" name="status" value="active" />
                 Active
-              </label>
-              <label>
+              </Label1>
+              <Label1>
                 <Field type="radio" name="status" value="inactive" />
                 Inactive
-              </label>
+              </Label1>
               <ErrorMessage
                 name="status"
                 component="span"
@@ -120,11 +122,11 @@ const RouteForm = ({ history, editMode }) => {
             errorMessage={errors.stops}
           />
 
-          <button type="submit" className="Button Button_primary">
+          <Button type="submit" className="Button Button_primary">
             {editMode ? "Save" : "Submit"}
-          </button>
-          <Link to="/" className="Button Button_secondary">
-            Home
+          </Button>
+          <Link to="/">
+            <Button kind={KIND.secondary}>Home</Button>
           </Link>
         </Form>
       )}

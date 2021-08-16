@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import SearchLocationInput from "../SearchLocationInput/SearchLocationInput";
+import {Label1} from 'baseui/typography';
+import { ListItem, ListItemLabel } from "baseui/list";
 import "./Stops.css";
 
 const Stops = ({ grabStops, errorMessage, stops }) => {
@@ -40,21 +42,21 @@ const Stops = ({ grabStops, errorMessage, stops }) => {
 
   return (
     <div className="Stops">
-      <p className="Stops__title">Search and select a place to add as "STOP"</p>
+      <Label1 className="Stops__title">Search and select a place to add as "STOP"</Label1>
       <SearchLocationInput onPlaceSelect={addPlaceAsStop} />
       <p className="Stops__errorMessage">{errorMessage}</p>
       <ul className="Stops__ul">
         {stopList.map((stop) => (
-          <li key={stop.stopId} className="Stops__li">
-            <span>{stop.stopName}</span>
+          <ListItem key={stop.stopId} className="Stops__li">
+            <ListItemLabel>{stop.stopName}</ListItemLabel>
             <FontAwesomeIcon
               icon={faTimes}
               onClick={() => {
                 deleteStop(stop.stopId);
               }}
-              className="Stops__delete"
+              //className="Stops__delete"
             />
-          </li>
+          </ListItem>
         ))}
       </ul>
     </div>
